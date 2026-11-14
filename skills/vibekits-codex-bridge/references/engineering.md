@@ -83,3 +83,11 @@ node --test tool/codex_mobile/*.test.mjs
 后续源码检查点 v25 修复了 ownerFollow 六字段 decoder 和 Windows 取消 deadline。工作记录为 Python 源码 guards 105 通过、Node 31 通过、portable GCC analyzer/25 项检查通过。这是 v24 之后的增量，不应继续把 v24 称为最新；以上 v24 哈希仅指 v24。Dart/Flutter/Win32 仍未编译，Windows gate 仍 OFF，任务和产品验证均未宣称全部完成。
 
 复用教训：逐字段核对 wire decoder 与 producer，不能因导入闭包成立就认为协议解码正确；取消要有可到达的 deadline，覆盖无新事件和等待中的原生调用。更新证据表时同时保留基线、增量和未执行项。
+
+### v26 增量记录
+
+本次更新时最新已复核源码检查点为 v26，源码包 SHA256 `2a362bdf2247954436bffa485d3a0188a2a8a8aee6beacc561a22abc0573d0cd`。新增有界、需用户明确触发的逐条消息复制；UI 移除已禁用的 sandbox 选项，并纠正策略说明文案，避免让用户误认为未生效的限制已提供保护。
+
+验证记录：Python 源码检查 108 通过、Node 31 项检查通过，patch apply-check 通过；独立源码复核未发现本次增量的新阻塞。这不是产品可运行或安全性的证明。Dart/Flutter/Win32 仍未编译，Windows gate 仍 OFF；签名、部署及真实端到端验证仍未执行。v24/v25 保留为历史记录，不能把旧哈希或旧检查数量当作 v26。
+
+复用教训：复制也是内容出口，应限定到当前可见且获准展示的单条消息，限制大小并要求明确操作，不自动复制隐藏正文、完整会话或内部字段。权限 UI 只能描述真实生效策略；禁用控件不能让用户误认为存在可用保护。每次文案或复制路径变更也要纳入权限和展示限制的复核。
